@@ -7,14 +7,25 @@
 //5번의 기회를 다쓰면 게임이 끝난다.(더 이상 추측 불가, 버튼이 disabled)
 //유저가 1~100 범위 밖에 숫자를 입력하면 알려준다. 기회를 깎지 않는다.
 //유저가 이미 입력한 숫자를 또 입력하면, 알려준다, 기회를 깎지 않는다.
+//(부가)값을 입력한 후 입력창을 누를 때 이전 입력값이 사라지게 한다.
+//(부가)값을 맞출때도 play버튼이 비활성화되게 하기
 
 
 let computerNum = 0;
 let playButton = document.getElementById("play-button");
 let userInput = document.getElementById("user-input");
 let resultArea = document.getElementById("result-area");
+let resetButton = document.getElementById("reset-button");
+let chances = 5;
+let gameOver=false;
+let chanceArea = document.getElementById("chance-area");
+let history=[];
 
 playButton.addEventListener("click",play); //함수가 매개변수로 들어갔기 때문에 '()'가 빠진다
+resetButton.addEventListener("click",reset);
+userInput.addEventListener("focus",function(){ //focus: 커서가 닿았을 때, 집중됬을 때
+    userInput.value="" //이 함수는 익명의 함수(function())를 썼다. 이유는 내용이 많이 없고, 함수 선언은 오히려 메모리가 쓰이고, 그리고 한 번만 쓸거기 때문에 익명의 함수를 썼다.
+});
 
 function pickRandomNum(){
     computerNum = Math.floor(Math.random() * 100) + 1;
@@ -23,13 +34,52 @@ function pickRandomNum(){
 
 function play(){ 
     let userValue = userInput.value;
+
+    if(userValue<1 || userValue>100){
+        resultArea.textContent="1과 100사이 숫자를 입력해 주세요";
+        return; //함수를 바로 종료하고 싶으면 return을 쓰면 된다.
+    }
+
+    if(history.includes(userValue)){
+        resultArea.textContent="이미 입력한 숫자입니다. 다른 숫자를 입력해 주세요!";
+        return;
+    }
+
+    chances -- ;
+    chanceArea.textContent=`남은 기회: ${chances}번`
+    //큰 따옴표는 정적인 값에만 쓴다.
+    //동적, 정적인 값을 같이 넣고 싶으면 백틱(``)을 써야 한다.동적: 계속 바뀌는 값, 정적: 일정한 값
+    console.log("chance", chances);
+
     if(userValue < computerNum){
         resultArea.textContent = "Up!!"
     } else if(userValue > computerNum){
         resultArea.textContent = "Down!!"
     } else {
         resultArea.textContent = "맞췄습니다!!"
+        gameOver = true;
+    }
+
+    history.push(userValue);
+    console.log(history);
+
+    if(chances < 1){
+        gameOver=true;
+    }
+
+    if (gameOver == true) {
+        playButton.disabled = true;
     }
 }
 
+function reset() {
+    // user input창이 깨끗하게 정리되고
+    userInput.value = "";
+    // 새로운 번호가 생성되고
+    pickRandomNum();
+    //결과창의 문구가 바뀐다.
+    resultArea.textContent="결과값이 여기 나옵니다."
+}
 pickRandomNum();
+
+//UI만들 때는 반응형 사이트 만들기(사이트 사이즈에 따라 사이즈 변하는 UI들)
