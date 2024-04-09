@@ -14,13 +14,15 @@
 let computerNum = 0;
 let playButton = document.getElementById("play-button");
 let userInput = document.getElementById("user-input");
-let resultArea = document.getElementById("result-area");
-let resetButton = document.getElementById("reset-button");
+let resultText = document.querySelector(".result-text");
+let resetButton = document.querySelector(".button-reset");
+let resultAreaImg = document.querySelector(".main-img");
+let chanceArea = document.getElementById("chance-area");
 let chances = 5;
 let gameOver=false;
-let chanceArea = document.getElementById("chance-area");
 let history=[];
 
+chanceArea.innerHTML = `남은 기회:${chances}`;
 playButton.addEventListener("click",play); //함수가 매개변수로 들어갔기 때문에 '()'가 빠진다
 resetButton.addEventListener("click",reset);
 userInput.addEventListener("focus",function(){ //focus: 커서가 닿았을 때, 집중됬을 때
@@ -36,35 +38,43 @@ function play(){
     let userValue = userInput.value;
 
     if(userValue<1 || userValue>100){
-        resultArea.textContent="1과 100사이 숫자를 입력해 주세요";
+        resultText.textContent="1과 100사이 숫자를 입력해 주세요!";
+        resultAreaImg.src="./image/same.gif";
         return; //함수를 바로 종료하고 싶으면 return을 쓰면 된다.
     }
 
     if(history.includes(userValue)){
-        resultArea.textContent="이미 입력한 숫자입니다. 다른 숫자를 입력해 주세요!";
+        resultText.textContent="이미 입력한 숫자입니다!";
+        resultAreaImg.src="./image/same.gif";
         return;
     }
 
     chances -- ;
-    chanceArea.textContent=`남은 기회: ${chances}번`
+    chanceArea.textContent=`남은 기회: ${chances}번`;
     //큰 따옴표는 정적인 값에만 쓴다.
     //동적, 정적인 값을 같이 넣고 싶으면 백틱(``)을 써야 한다.동적: 계속 바뀌는 값, 정적: 일정한 값
     console.log("chance", chances);
 
-    if(userValue < computerNum){
-        resultArea.textContent = "Up!!"
-    } else if(userValue > computerNum){
-        resultArea.textContent = "Down!!"
-    } else {
-        resultArea.textContent = "맞췄습니다!!"
-        gameOver = true;
-    }
-
     history.push(userValue);
     console.log(history);
 
-    if(chances < 1){
+    if(userValue < computerNum){
+        resultAreaImg.src="./image/up.gif"
+        resultText.textContent = "Up!! 오빠 내 생일은 어떻게 기억할려고?"
+    } else if(userValue > computerNum){
+        resultAreaImg.src="./image/down.gif"
+        resultText.textContent = "Down!! 실망이야.."
+    } else {
+        resultAreaImg.src="./image/success.gif"
+        resultText.textContent = "맞췄습니다!!"
+        gameOver = true;
+    }
+
+    
+
+    if(chances == 0){
         gameOver=true;
+        resultText.textContent = "실패! 모쏠 당첨!"<br>"우리 헤어져.."
     }
 
     if (gameOver == true) {
@@ -78,8 +88,15 @@ function reset() {
     // 새로운 번호가 생성되고
     pickRandomNum();
     //결과창의 문구가 바뀐다.
-    resultArea.textContent="결과값이 여기 나옵니다."
+    resultText.textContent="숫자를 맞추면 고백에 성공한다!"
+    resultAreaImg.src="./image/confession.gif"
+    gameOver=false;
+    playButton.disabled = false;
+    chances=5;
+    chanceArea.innerHTML = `남은 기회:${chances}`;
+    history=[];
 }
+
 pickRandomNum();
 
 //UI만들 때는 반응형 사이트 만들기(사이트 사이즈에 따라 사이즈 변하는 UI들)

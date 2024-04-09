@@ -1,0 +1,92 @@
+@font-face{
+    font-family: '둥글';
+    font-style: 'normal';
+    font-weight: 400;
+    src: url('KCC-Ganpan.woff');
+}
+
+body {
+    /* background-repeat: no-repeat; */
+    background-size:cover;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: "둥글";
+    background-image: url(image/cherry2.gif);
+  }
+  
+
+  .container {
+    border: 10px solid white;
+    border-radius: 20px;
+    text-align: center;
+    background-color: rgba(247, 243, 242, 0.7);
+  }
+  
+  
+  .border-line {
+    padding-bottom: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  
+  .button-style {
+    height: 80px;
+    width: 150px;
+    margin-top: 5px;
+    border-radius: 50px;
+    font-size: 30pt;
+    font-weight: bold;
+  }
+  .title {
+    font-size: 7vw;
+    font-weight: bold;
+    color: red;
+  }
+  .sub-title {
+    font-size: 4vw;
+    font-weight: bold;
+  }
+  
+  .main-img {
+    width: 40vw;
+    height: 30vh
+  }
+  
+  .red-text {
+    color: red;
+  }
+  
+  .form-control {
+    height: 80px;
+  
+    font-size: 3vw;
+    margin-right: 20px;
+    text-align: center;
+  }
+  
+  @media screen and (max-width: 48rem) {
+    .title {
+      font-size: 12vw;
+    }
+    .sub-title {
+      font-size: 8vw;
+    }
+    .form-control {
+      font-size: 8vw;
+      max-width: 500px;
+      margin-right: 0px;
+    }
+    .main-img {
+      width: 40vw;
+    }
+    .button-reset {
+      font-size: 5vw;
+      width: 80px;
+      height: 60px;
+    }
+  }
+  
