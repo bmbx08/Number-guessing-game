@@ -44,7 +44,7 @@ function play(){
     }
 
     if(history.includes(userValue)){
-        resultText.textContent="이미 입력한 숫자입니다!";
+        resultText.textContent="이미 입력한 숫자! 자기야 그거 맞아??";
         resultAreaImg.src="./image/same.gif";
         return;
     }
@@ -66,7 +66,7 @@ function play(){
         resultText.textContent = "Down!! 실망이야.."
     } else {
         resultAreaImg.src="./image/success.gif"
-        resultText.textContent = "맞췄습니다!!"
+        resultText.textContent = "성공!! 우리 언제 만나??"
         gameOver = true;
     }
 
