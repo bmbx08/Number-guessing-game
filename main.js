@@ -70,11 +70,12 @@ function play(){
         gameOver = true;
     }
 
-    
+    https://t1.daumcdn.net/cafeattach/aVeZ/07338e1a5e60ac81d8fca6f60561182436c33be5_re_1611681265032
 
     if(chances == 0){
+        resultText.textContent = "실패! 모쏠 당첨! 우리 헤어져.."
+        resultAreaImg.src="./image/fail.gif"
         gameOver=true;
-        resultText.textContent = "실패! 모쏠 당첨!"<br>"우리 헤어져.."
     }
 
     if (gameOver == true) {
